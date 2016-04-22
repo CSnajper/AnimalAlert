@@ -53,7 +53,6 @@ public class DatabaseConfig {
 
     @Bean
     public PlatformTransactionManager transactionManager() {
-
         JpaTransactionManager txManager = new JpaTransactionManager();
         txManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return txManager;
