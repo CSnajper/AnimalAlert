@@ -1,6 +1,5 @@
 package eu.programisci.config;
 
-import com.sun.xml.internal.fastinfoset.sax.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +40,9 @@ public class DatabaseConfig {
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setDatabase(Database.MYSQL);
+        vendorAdapter.setShowSql(true);
         vendorAdapter.setGenerateDdl(true);
+        //vendorAdapter.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);

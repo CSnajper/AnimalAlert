@@ -1,7 +1,10 @@
 package eu.programisci.domain;
 
 
+import org.springframework.data.annotation.*;
+
 import javax.persistence.*;
+import javax.persistence.Id;
 import java.util.Set;
 
 @Entity
@@ -14,13 +17,13 @@ public class Organisation {
 
     private String phoneNumber;
 
-    @ManyToMany
+    /*@ManyToMany
     @JoinTable(
             name="users_in_organisations",
             joinColumns = {@JoinColumn(name = "organisation_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")}
     )
-    private Set<User> users;
+    private Set<User> users;*/
 
     public long getId() {
         return id;
@@ -44,13 +47,5 @@ public class Organisation {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 }

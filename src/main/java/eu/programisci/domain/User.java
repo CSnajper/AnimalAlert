@@ -1,13 +1,22 @@
 package eu.programisci.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class User {
+public class User implements Serializable, UserDetails {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -25,12 +34,18 @@ public class User {
     @Email
     private String email;
 
-    /*@OneToOne
-    @JoinColumn(name = "adress_id")
-    private Adress adress;*/
+    private boolean accountNonExpired;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Organisation> organisations;
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
+    private Set<Authority> authorities = new HashSet<>();
 
     public long getId() {
         return id;
@@ -64,11 +79,47 @@ public class User {
         this.email = email;
     }
 
-    public Set<Organisation> getOrganisations() {
-        return organisations;
+    public Set<Authority> getAuthorities() {
+        return authorities;
     }
 
-    public void setOrganisations(Set<Organisation> organisations) {
-        this.organisations = organisations;
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
