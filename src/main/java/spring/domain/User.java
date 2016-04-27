@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -21,11 +22,12 @@ public class User implements Serializable, UserDetails {
     private long id;
 
     @Column(length = 35, nullable = false)
-    @Size(min = 3, max = 35)
+    @Size(min = 2, max = 50)
     private String username;
 
-    @Column(length = 35, nullable = false)
-    @Size(min = 6, max = 35)
+    @NotNull
+    @Size(min = 60, max = 60)
+    @Column(name = "password_hash",length = 60)
     private String password;
 
     @Column(length = 100, nullable = false)
