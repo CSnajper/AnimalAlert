@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @ComponentScan("spring.security")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/resources/**");
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

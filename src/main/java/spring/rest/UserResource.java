@@ -35,15 +35,6 @@ public class UserResource {
     @Inject
     UserService userService;
 
-    @RequestMapping(value = "/users/{id}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getUserById(@PathVariable long id) {
-        return userRepository.findOneById(id).
-                map(u -> new ResponseEntity<>(u, HttpStatus.OK)).
-                orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
     /**
      * GET  /users/:username : get the "username" user.
      *
@@ -77,6 +68,7 @@ public class UserResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
         HttpHeaders headers = new HttpHeaders();

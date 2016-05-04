@@ -19,7 +19,6 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "spring.repository")
-@PropertySource(value = { "classpath:application.properties" })
 public class DatabaseConfig {
 
     @Autowired
