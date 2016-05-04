@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Shelter - add user</title>
+</head>
+<body>
+<h1>login Form</h1>
+
+<form action="#" th:action="@{/login}" th:object="${user}" method="post" >
+    <label for="username">Nick: </label>
+    <input type="text" th:field="*{username}" />
+    <label for="password">Hasło: </label>
+    <input type="text" th:field="*{password}" />
+    <input type="submit" />
+</form>
+</body>
+</html>

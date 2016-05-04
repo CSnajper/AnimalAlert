@@ -2,7 +2,6 @@ package spring.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +31,9 @@ public class UserService {
     @Inject
     UserRepository userRepository;
 
+    @Inject
+    MailService emailService;
+
     public User createUser(UserDTO userDTO) {
         Profile userProfile = new Profile();
 
@@ -44,6 +46,7 @@ public class UserService {
             );
             user.setAuthorities(authorities);
         }
+
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -52,6 +55,7 @@ public class UserService {
         user.setAccountNonLocked(true);
         user.setCredentialsNonExpired(true);
         userRepository.save(user);
+        emailService.sendActivationEmail("kondzixu@gmail.com", user);
         log.debug("Created Information for User: {}", user);
         return user;
     }

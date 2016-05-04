@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "authority")
-public class Authority implements Serializable, GrantedAuthority {
+public class Authority implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -63,7 +63,7 @@ public class Authority implements Serializable, GrantedAuthority {
             "}";
     }
 
-    @Override
+    //@Override
     public String getAuthority() {
         return name;
     }

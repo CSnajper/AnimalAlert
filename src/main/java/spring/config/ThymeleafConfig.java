@@ -6,8 +6,12 @@ import org.springframework.web.servlet.ViewResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.TemplateResolver;
+
+import java.util.Set;
 
 @Configuration
 public class ThymeleafConfig {
@@ -20,9 +24,9 @@ public class ThymeleafConfig {
 
     //silnik szablonow thymeleaf
     @Bean
-    public TemplateEngine templateEngine(TemplateResolver templateResolver) {
+    public TemplateEngine templateEngine(Set<ITemplateResolver> templateResolvers) {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver);
+        templateEngine.setTemplateResolvers(templateResolvers);
         return templateEngine;
     }
 
@@ -33,6 +37,19 @@ public class ThymeleafConfig {
         templateResolver.setPrefix("/WEB-INF/templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML5");
+        templateResolver.setOrder(2);
         return templateResolver;
+    }
+
+    @Bean
+    public ClassLoaderTemplateResolver emailTemplateResolver() {
+        ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+        resolver.setPrefix("mails/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode("HTML5");
+        resolver.setCharacterEncoding(("UTF-8"));
+        resolver.setOrder(1);
+
+        return resolver;
     }
 }
