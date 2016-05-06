@@ -1,29 +1,15 @@
-package spring.domain;
+package spring.dto;
 
-import javax.persistence.*;
-import javax.persistence.Id;
 
-@Entity
-public class Organisation {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+import spring.domain.Adress;
+
+public class RegisterOrganisationDTO {
 
     private String name;
 
     private String phoneNumber;
 
-    @OneToOne
-    @JoinColumn(name = "adress_id", referencedColumnName = "id")
     private Adress adress;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

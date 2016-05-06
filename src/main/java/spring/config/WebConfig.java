@@ -5,6 +5,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.MailSender;
@@ -43,30 +44,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         configurer.enable();
     }
 
-    /*@Bean
-    public JavaMailSender mailSender() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(env.getProperty("mailserver.host"));
-        mailSender.setPort(587);
-        mailSender.setUsername(env.getProperty("mailserver.user"));
-        mailSender.setPassword(env.getProperty("mailserver.password"));
-        return mailSender;
-    }*/
-
     @Bean
     public JavaMailSender mailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
-        mailSender.setUsername("kondzixd@gmail.com");
-        mailSender.setPassword("c140b18M@IL");
+        mailSender.setUsername("shelterapps@gmail.com");
+        mailSender.setPassword("pop12345");
 
         Properties props = new Properties();
-        /*props.put("mail.transport.protocol", "smtp");
-        props.put("mail.host", "smtp.gmail.com");
-        props.put("mail.user", "kondzixd@gmail.com");
-        props.put("mail.password", "c140b18M@IL");
-        props.put("mail.port", "587");*/
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.auth", "true");
 

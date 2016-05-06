@@ -47,7 +47,7 @@ public class ThymeleafConfig {
         resolver.setPrefix("mails/");
         resolver.setSuffix(".html");
         resolver.setTemplateMode("HTML5");
-        resolver.setCharacterEncoding(("UTF-8"));
+        resolver.setCharacterEncoding("UTF-8");
         resolver.setOrder(1);
 
         return resolver;

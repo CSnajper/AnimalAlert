@@ -1,7 +1,7 @@
 package spring.controller;
 
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import spring.domain.Authority;
 import spring.domain.User;
 import spring.dto.UserDTO;
@@ -10,9 +10,6 @@ import spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -63,7 +60,7 @@ public class UserController {
 
         userDTO.setAuthorities(authorities);
 
-        User user = userService.createUser(userDTO);
+        userService.createUser(userDTO);
 
         return "redirect:/users";
     }
@@ -74,5 +71,18 @@ public class UserController {
         users.addAll(userRepository.findAll());
         model.addAttribute("users", users);
         return "users";
+    }
+
+    @RequestMapping(value = "/activate", method = RequestMethod.GET)
+    public String activateUser(@RequestParam(value = "key") String key, Model model) {
+        Optional<User> user = userService.activateRegistration(key);
+
+        if(user.isPresent()) {
+            model.addAttribute("message", "Konto zostalo aktywowane :)");
+        }
+        else
+            model.addAttribute("message", "Konto nie zostało aktywowane. Być może kod aktywacyjny jest niepoprawny");
+
+        return "activationForm";
     }
 }

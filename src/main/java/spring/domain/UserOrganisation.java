@@ -26,7 +26,7 @@ public class UserOrganisation {
     @ManyToMany
     @JoinTable(
             name = "user_organisation_authority",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            joinColumns = {@JoinColumn(name = "user_organisation_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
 

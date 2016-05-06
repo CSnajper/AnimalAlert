@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import spring.domain.User;
 import spring.dto.UserDTO;
 import spring.repository.UserRepository;
+import spring.service.MailService;
 import spring.service.UserService;
 
 import javax.inject.Inject;
@@ -34,6 +35,9 @@ public class UserResource {
 
     @Inject
     UserService userService;
+
+    @Inject
+    MailService mailService;
 
     /**
      * GET  /users/:username : get the "username" user.
@@ -90,11 +94,26 @@ public class UserResource {
                     ":" +                                  // ":"
                     request.getServerPort() +              // "80"
                     request.getContextPath();              // "/myContextPath" or "" if deployed in root context
-            //mailService.sendCreationEmail(newUser, baseUrl);
+            mailService.sendActivationEmail(newUser, baseUrl);
             headers.set("userManagement", "A user is created with identifier " + newUser.getUsername());
             return ResponseEntity.created(new URI("/api/users/" + newUser.getUsername()))
                     .headers(headers)
                     .body(newUser);
         }
+    }
+
+    /**
+     * GET  /activate : activate the registered user.
+     *
+     * @param key the activation key
+     * @return the ResponseEntity with status 200 (OK) and the activated user in body, or status 500 (Internal Server Error) if the user couldn't be activated
+     */
+    @RequestMapping(value = "/activate",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
+        return userService.activateRegistration(key)
+                .map(user -> new ResponseEntity<String>(HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 }

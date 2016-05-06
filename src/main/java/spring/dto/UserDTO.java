@@ -34,7 +34,7 @@ public class UserDTO {
     }
 
     public UserDTO(User user) {
-        this(user.getUsername(), null, user.getEmail(), user.isEnabled(),
+        this(user.getUsername(), null, user.getEmail(), user.isActivated(),
                 user.getAuthorities().stream().map(Authority::getName)
                         .collect(Collectors.toSet()));
     }

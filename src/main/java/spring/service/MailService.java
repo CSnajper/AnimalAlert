@@ -4,7 +4,6 @@ package spring.service;
 import org.apache.commons.lang.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -15,6 +14,7 @@ import spring.domain.User;
 
 import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
+import java.util.Locale;
 
 @Service
 public class MailService {
@@ -47,13 +47,24 @@ public class MailService {
     }
 
     @Async
-    public void sendActivationEmail(String to, User user) {
-        Context ctx = new Context();
-        ctx.setVariable("username", user.getUsername());
-        ctx.setVariable("message", "Witaj " + user.getUsername());
+    public void sendActivationEmail(User user, String baseUrl) {
+        log.debug("Sending activation e-mail to '{}'", user.getEmail());
+        Context context = new Context();
+        context.setVariable("user", user);
+        context.setVariable("baseUrl", baseUrl);
+        String content = thymeleaf.process("activationEmail", context);
+        String subject = "Witaj w aplikacji Shelter";
+        sendEmail(user.getEmail(), subject, content, false, true);
+    }
 
-        String content = thymeleaf.process("activationEmail", ctx);
-        String subject = "Witaj " + user.getUsername();
+    @Async
+    public void sendCreationEmail(User user, String baseUrl) {
+        log.debug("Sending creation e-mail to '{}'", user.getEmail());
+        Context context = new Context();
+        context.setVariable("user", user);
+        context.setVariable("baseUrl", baseUrl);
+        String content = thymeleaf.process("creationEmail", context);
+        String subject = "Utworzenie konta w aplikacji Shelter";
         sendEmail(user.getEmail(), subject, content, false, true);
     }
 

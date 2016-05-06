@@ -2,15 +2,22 @@ package spring.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import spring.domain.Authority;
 import spring.domain.Profile;
 import spring.domain.User;
 import spring.dto.UserDTO;
 import spring.repository.AuthorityRepository;
 import spring.repository.UserRepository;
+import spring.service.util.RandomUtil;
 
 import javax.inject.Inject;
 import java.util.HashSet;
@@ -32,11 +39,9 @@ public class UserService {
     UserRepository userRepository;
 
     @Inject
-    MailService emailService;
+    MailService mailService;
 
     public User createUser(UserDTO userDTO) {
-        Profile userProfile = new Profile();
-
         User user = new User();
 
         if (!userDTO.getAuthorities().isEmpty()) {
@@ -50,12 +55,10 @@ public class UserService {
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setEnabled(true);
-        user.setAccountNonExpired(true);
-        user.setAccountNonLocked(true);
-        user.setCredentialsNonExpired(true);
+        user.setActivated(false);
+        String key = RandomUtil.generateActivationKey();
+        user.setActivationKey(key);
         userRepository.save(user);
-        emailService.sendActivationEmail("kondzixu@gmail.com", user);
         log.debug("Created Information for User: {}", user);
         return user;
     }
@@ -67,6 +70,19 @@ public class UserService {
             u.getAuthorities().size();
             return u;
         });
+    }
+
+    public Optional<User> activateRegistration(String key) {
+        log.debug("Activating user for activation key {}", key);
+        return userRepository.findOneByActivationKey(key)
+                .map(user -> {
+                    // activate given user for the registration key.
+                    user.setActivated(true);
+                    user.setActivationKey(null);
+                    userRepository.save(user);
+                    log.debug("Activated user: {}", user);
+                    return user;
+                });
     }
 
 }

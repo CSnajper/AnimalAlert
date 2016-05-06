@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <title></title>
+    <title>Aktywacja konta</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <h2>Witaj <span th:text="${username}">!</span></h2>
-    <span th:text="${message}"></span>
+<p th:text="${user.username}">
+    Dear
+</p>
+<p>
+    Aby aktywowac konto kliknij poniższy link:
+</p>
+<p>
+    <a th:href="@{|${baseUrl}/activate?key=${user.activationKey}|}"
+       th:text="|${baseUrl}/activate?key=${user.activationKey}|">Activation Link</a>
+</p>
+<p>
+    <span>Pozdrawiamy, </span>
+    <br/>
+    <em>Zespół nazwadomeny.pl.</em>
+</p>
 </body>
 </html>

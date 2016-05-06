@@ -35,7 +35,12 @@ public class User implements Serializable {
     @Email
     private String email;
 
-    private boolean enabled;
+    private boolean activated;
+
+    @Size(max = 20)
+    @Column(name = "activation_key", length = 20)
+    @JsonIgnore
+    private String activationKey;
 
     @JsonIgnore
     @ManyToMany
@@ -85,11 +90,19 @@ public class User implements Serializable {
         this.authorities = authorities;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public boolean isActivated() {
+        return activated;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public String getActivationKey() {
+        return activationKey;
+    }
+
+    public void setActivationKey(String activationKey) {
+        this.activationKey = activationKey;
     }
 }
