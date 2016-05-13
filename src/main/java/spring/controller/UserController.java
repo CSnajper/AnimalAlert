@@ -2,15 +2,17 @@ package spring.controller;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import spring.domain.Authority;
 import spring.domain.User;
-import spring.dto.UserDTO;
+import spring.rest.dto.UserDTO;
 import spring.repository.UserRepository;
+import spring.service.MailService;
 import spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -20,6 +22,8 @@ public class UserController {
     UserRepository userRepository;
     @Autowired
     UserService userService;
+    @Inject
+    MailService mailService;
 
     @RequestMapping(value = "/addUser", method = RequestMethod.GET)
     public String userPage(Model model) {
@@ -51,7 +55,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerProcess(@ModelAttribute @Valid UserDTO userDTO, BindingResult results) {
+    public String registerProcess(@ModelAttribute @Valid UserDTO userDTO, BindingResult results, HttpServletRequest request) {
         if(results.hasErrors())
             return "registerForm";
 
@@ -59,8 +63,15 @@ public class UserController {
         authorities.add("ROLE_USER");
 
         userDTO.setAuthorities(authorities);
+        String baseUrl = request.getScheme() + // "http"
+                "://" +                                // "://"
+                request.getServerName() +              // "myhost"
+                ":" +                                  // ":"
+                request.getServerPort() +              // "80"
+                request.getContextPath();              // "/myContextPath" or "" if deployed in root context
 
-        userService.createUser(userDTO);
+        User newUser = userService.createUser(userDTO);
+        mailService.sendActivationEmail(newUser, baseUrl);
 
         return "redirect:/users";
     }

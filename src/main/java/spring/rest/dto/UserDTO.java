@@ -1,4 +1,4 @@
-package spring.dto;
+package spring.rest.dto;
 
 
 import org.hibernate.validator.constraints.Email;
@@ -23,6 +23,8 @@ public class UserDTO {
     @NotNull
     @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
+
+    private Boolean activated = false;
 
     @Email
     @Size(min = 5, max = 100)
@@ -60,6 +62,14 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getActivated() {
+        return activated;
+    }
+
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
     }
 
     public String getEmail() {

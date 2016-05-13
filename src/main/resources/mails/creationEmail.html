@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Aktywacja konta</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p th:text="${user.username}">
+    Dear
+</p>
+<p>
+    Twoje konto w aplikacji Shelter zostało stworzone. Aby się zalogować odwiedź tę stronę:
+</p>
+<p>
+    <a th:href="@{|${baseUrl}|}"
+       th:text="|${baseUrl}|">Strona główna</a>
+</p>
+<p>
+    <span>Pozdrawiamy, </span>
+    <br/>
+    <em>Zespół nazwadomeny.pl.</em>
+</p>
+</body>
+</html>

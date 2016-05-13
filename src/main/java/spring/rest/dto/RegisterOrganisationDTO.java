@@ -1,4 +1,4 @@
-package spring.dto;
+package spring.rest.dto;
 
 
 import spring.domain.Adress;
