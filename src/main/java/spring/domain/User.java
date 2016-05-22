@@ -1,8 +1,6 @@
 package spring.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -15,8 +13,6 @@ import java.util.Set;
 @Entity
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -27,7 +23,7 @@ public class User implements Serializable {
 
     @NotNull
     @Size(min = 60, max = 60)
-    @Column(name = "password_hash",length = 60)
+    @Column(name = "password_hash", length = 60, nullable = false)
     private String password;
 
     @Column(length = 100, nullable = false)
@@ -35,14 +31,13 @@ public class User implements Serializable {
     @Email
     private String email;
 
+    @Column(name="active", nullable = false)
     private boolean activated;
 
     @Size(max = 20)
     @Column(name = "activation_key", length = 20)
-    @JsonIgnore
     private String activationKey;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "user_site_authority",

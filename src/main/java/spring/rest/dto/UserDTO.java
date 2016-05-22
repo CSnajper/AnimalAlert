@@ -12,8 +12,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserDTO {
-    public static final int PASSWORD_MIN_LENGTH = 4;
-    public static final int PASSWORD_MAX_LENGTH = 100;
+    private static final int PASSWORD_MIN_LENGTH = 4;
+    private static final int PASSWORD_MAX_LENGTH = 100;
 
     @Pattern(regexp = "^[a-z0-9]*$")
     @NotNull
@@ -24,7 +24,7 @@ public class UserDTO {
     @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
 
-    private Boolean activated = false;
+    private boolean activated;
 
     @Email
     @Size(min = 5, max = 100)
@@ -41,9 +41,10 @@ public class UserDTO {
                         .collect(Collectors.toSet()));
     }
 
-    public UserDTO(String username, String password, String email, boolean enabled, Set<String> authorities) {
+    public UserDTO(String username, String password, String email, boolean activated, Set<String> authorities) {
         this.username = username;
         this.password = password;
+        this.activated = activated;
         this.email = email;
         this.authorities = authorities;
     }
@@ -64,14 +65,6 @@ public class UserDTO {
         this.password = password;
     }
 
-    public Boolean getActivated() {
-        return activated;
-    }
-
-    public void setActivated(Boolean activated) {
-        this.activated = activated;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -86,5 +79,13 @@ public class UserDTO {
 
     public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 }

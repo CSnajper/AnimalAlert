@@ -18,6 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
@@ -27,17 +28,18 @@ public class DatabaseConfig {
     @Autowired
     private Environment env;
 
-    /*@Bean
+    @Bean
     public DataSource dataSource() {
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
         dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
         dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
         dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
         return dataSource;
-    }*/
+    }
 
-    @Bean
+    /*@Bean
     public DataSource dataSource() {
         // no need shutdown, EmbeddedDatabaseFactoryBean will take care of this
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
@@ -46,13 +48,21 @@ public class DatabaseConfig {
                 .setName("SHELTER")
                 .build();
         return db;
+    }*/
+
+    @Bean
+    public Properties jpaProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+
+        return properties;
     }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setDatabase(Database.HSQL);
+        vendorAdapter.setDatabase(Database.MYSQL);
         vendorAdapter.setShowSql(true);
         vendorAdapter.setGenerateDdl(true);
         //vendorAdapter.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
@@ -61,6 +71,7 @@ public class DatabaseConfig {
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("spring.domain");
         factory.setDataSource(dataSource());
+        factory.setJpaProperties(jpaProperties());
 
         return factory;
     }

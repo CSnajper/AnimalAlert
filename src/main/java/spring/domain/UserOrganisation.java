@@ -11,7 +11,7 @@ import java.util.Set;
 @Table(name = "user_organisation", uniqueConstraints={@UniqueConstraint(columnNames={"user_id", "organisation_id"})})
 public class UserOrganisation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @OneToOne

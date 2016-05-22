@@ -17,13 +17,13 @@ public class Pet {
     @OneToOne
     private Profile profile;
 
-    @Size(max=35)
-    @Column(length = 35)
+    @Size(max=50)
+    @Column(length = 50)
     private String name;
 
     private int age;
 
-    @NotNull
+    @Column(name="fur_color", nullable = false)
     private String furColor;
 
     private String race;
