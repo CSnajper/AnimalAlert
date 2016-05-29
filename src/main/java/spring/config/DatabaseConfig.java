@@ -1,9 +1,8 @@
 package spring.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -17,6 +16,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -25,10 +25,10 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "spring.repository")
 public class DatabaseConfig {
 
-    @Autowired
+    @Inject
     private Environment env;
 
-    @Bean
+    /*@Bean
     public DataSource dataSource() {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -37,41 +37,32 @@ public class DatabaseConfig {
         dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
         dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
         return dataSource;
-    }
-
-    /*@Bean
-    public DataSource dataSource() {
-        // no need shutdown, EmbeddedDatabaseFactoryBean will take care of this
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        EmbeddedDatabase db = builder
-                .setType(EmbeddedDatabaseType.HSQL) //.H2 or .DERBY
-                .setName("SHELTER")
-                .build();
-        return db;
     }*/
 
     @Bean
-    public Properties jpaProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-
-        return properties;
+    public DataSource dataSource() {
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        return builder
+                .setType(EmbeddedDatabaseType.H2)
+                .build();
     }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setDatabase(Database.MYSQL);
         vendorAdapter.setShowSql(true);
         vendorAdapter.setGenerateDdl(true);
-        //vendorAdapter.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
+
+        Properties jpaProperties = new Properties();
+        jpaProperties.setProperty("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
+        jpaProperties.setProperty("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("spring.domain");
         factory.setDataSource(dataSource());
-        factory.setJpaProperties(jpaProperties());
+        factory.setJpaProperties(jpaProperties);
+        factory.afterPropertiesSet();
 
         return factory;
     }
