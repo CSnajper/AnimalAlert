@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import spring.domain.Organisation;
 import spring.rest.dto.RegisterOrganisationDTO;
-import spring.repository.AdressRepository;
+import spring.repository.AddressRepository;
 import spring.repository.OrganisationRepository;
 
 import javax.inject.Inject;
@@ -20,15 +20,15 @@ public class OrganisationService {
     OrganisationRepository organisationRepository;
 
     @Inject
-    AdressRepository adressRepository;
+    AddressRepository AddressRepository;
 
     public Organisation createOrganisation(RegisterOrganisationDTO organisationDTO) {
         Organisation organisation = new Organisation();
 
-        adressRepository.save(organisationDTO.getAdress());
+        AddressRepository.save(organisationDTO.getAddress());
 
         organisation.setName(organisationDTO.getName());
-        organisation.setAdress(organisationDTO.getAdress());
+        organisation.setAddress(organisationDTO.getAddress());
         organisation.setPhoneNumber(organisationDTO.getPhoneNumber());
 
         organisationRepository.save(organisation);

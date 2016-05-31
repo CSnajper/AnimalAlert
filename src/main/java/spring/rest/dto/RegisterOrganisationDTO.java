@@ -1,7 +1,7 @@
 package spring.rest.dto;
 
 
-import spring.domain.Adress;
+import spring.domain.Address;
 
 public class RegisterOrganisationDTO {
 
@@ -9,7 +9,7 @@ public class RegisterOrganisationDTO {
 
     private String phoneNumber;
 
-    private Adress adress;
+    private Address Address;
 
     public String getName() {
         return name;
@@ -27,11 +27,11 @@ public class RegisterOrganisationDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public Adress getAdress() {
-        return adress;
+    public Address getAddress() {
+        return Address;
     }
 
-    public void setAdress(Adress adress) {
-        this.adress = adress;
+    public void setAddress(Address Address) {
+        this.Address = Address;
     }
 }

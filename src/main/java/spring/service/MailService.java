@@ -68,4 +68,15 @@ public class MailService {
         sendEmail(user.getEmail(), subject, content, false, true);
     }
 
+    @Async
+    public void sendPasswordResetMail(User user, String baseUrl) {
+        log.debug("Sending password reset e-mail to '{}'", user.getEmail());
+        Context context = new Context();
+        context.setVariable("user", user);
+        context.setVariable("baseUrl", baseUrl);
+        String content = thymeleaf.process("passwordResetEmail", context);
+        String subject = "Resetowanie hasła";
+        sendEmail(user.getEmail(), subject, content, false, true);
+    }
+
 }

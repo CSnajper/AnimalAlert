@@ -12,8 +12,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserDTO {
-    private static final int PASSWORD_MIN_LENGTH = 4;
-    private static final int PASSWORD_MAX_LENGTH = 100;
+    public static final int PASSWORD_MIN_LENGTH = 4;
+    public static final int PASSWORD_MAX_LENGTH = 100;
 
     @Pattern(regexp = "^[a-z0-9]*$")
     @NotNull

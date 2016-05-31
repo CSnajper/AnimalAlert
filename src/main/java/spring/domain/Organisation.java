@@ -14,8 +14,8 @@ public class Organisation {
     private String phoneNumber;
 
     @OneToOne
-    @JoinColumn(name = "adress_id", referencedColumnName = "id")
-    private Adress adress;
+    @JoinColumn(name = "Address_id", referencedColumnName = "id")
+    private Address Address;
 
     public long getId() {
         return id;
@@ -41,11 +41,11 @@ public class Organisation {
         this.phoneNumber = phoneNumber;
     }
 
-    public Adress getAdress() {
-        return adress;
+    public Address getAddress() {
+        return Address;
     }
 
-    public void setAdress(Adress adress) {
-        this.adress = adress;
+    public void setAddress(Address Address) {
+        this.Address = Address;
     }
 }
