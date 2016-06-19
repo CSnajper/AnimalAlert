@@ -1,0 +1,18 @@
+package spring.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import spring.domain.ChatMessage;
+
+import java.util.List;
+
+/**
+ * Created by Tomasz Komoszeski on 2016-06-18.
+ */
+public interface ChatRepository extends JpaRepository<ChatMessage, Long> {
+    @Query("SELECT message FROM  ChatMessage message WHERE message.sender.username =?1 AND message.recevier.username =?2")
+    List<ChatMessage> findAllChatMessagesBySenderAndRecevier(String sender, String recevier);
+
+    @Query("SELECT message FROM ChatMessage message WHERE message.sender.username = ?1")
+    List<ChatMessage> findAllChatMessagesBySender(String sender);
+}
