@@ -1,7 +1,7 @@
-package spring.chat.service;
+package spring.service.chatservice;
 
-import spring.chat.dto.ChatCreateDTO;
-import spring.chat.dto.ChatDTO;
+import spring.rest.dto.ChatCreateDTO;
+import spring.rest.dto.ChatDTO;
 
 import java.util.List;
 

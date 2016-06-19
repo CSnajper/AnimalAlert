@@ -1,13 +1,13 @@
-package spring.chat.service.impl;
+package spring.service.chatservice.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import spring.chat.dto.ChatCreateDTO;
-import spring.chat.dto.ChatDTO;
-import spring.chat.service.ChatService;
-import spring.chat.util.ChatConverter;
+import spring.rest.dto.ChatCreateDTO;
+import spring.rest.dto.ChatDTO;
+import spring.service.chatservice.ChatService;
+import spring.security.util.ChatConverter;
 import spring.domain.ChatMessage;
 import spring.domain.User;
 import spring.repository.ChatRepository;

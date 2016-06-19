@@ -1,6 +1,6 @@
-package spring.chat.util;
+package spring.security.util;
 
-import spring.chat.dto.ChatDTO;
+import spring.rest.dto.ChatDTO;
 import spring.domain.ChatMessage;
 
 import java.util.ArrayList;

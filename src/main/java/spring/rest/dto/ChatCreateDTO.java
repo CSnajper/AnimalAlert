@@ -1,4 +1,4 @@
-package spring.chat.dto;
+package spring.rest.dto;
 
 import io.swagger.annotations.ApiModel;
 

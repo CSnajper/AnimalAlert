@@ -1,4 +1,4 @@
-package spring.chat.api;
+package spring.rest;
 
 
 import org.slf4j.Logger;
@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import spring.chat.dto.ChatCreateDTO;
-import spring.chat.dto.ChatDTO;
-import spring.chat.service.ChatService;
+import spring.rest.dto.ChatCreateDTO;
+import spring.rest.dto.ChatDTO;
+import spring.service.chatservice.ChatService;
 
 import javax.inject.Inject;
 import java.util.List;
