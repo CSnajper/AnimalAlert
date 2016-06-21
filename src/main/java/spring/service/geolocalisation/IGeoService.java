@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface IGeoService {
     List<GeocodingResult> getLocationByAdress(String pAdress);
-    GeocodingResult getLocationByPlaceId(String pPlaceId);
+    List<GeocodingResult> getLocationByPlaceId(String pPlaceId);
     List<GeocodingResult> getLocationByLatLng(LatLng pCoordinates);
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.service.geolocalisation.IGeoService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,9 +18,9 @@ import java.util.List;
 public class GeoServiceImpl implements IGeoService {
     @Autowired
     private GeoApiContext context;
+    private List<GeocodingResult> results;
     @Override
     public List<GeocodingResult> getLocationByAdress(String pAdress) {
-        List<GeocodingResult> results = new ArrayList<>();
         try {
             results = Arrays.asList(GeocodingApi.geocode(context,pAdress).await());
         } catch (Exception e) {
@@ -32,12 +31,22 @@ public class GeoServiceImpl implements IGeoService {
     }
 
     @Override
-    public GeocodingResult getLocationByPlaceId(String pPlaceId) {
-        return null;
+    public List<GeocodingResult> getLocationByPlaceId(String pPlaceId) {
+        try {
+            results = Arrays.asList(GeocodingApi.newRequest(context).place(pPlaceId).await());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return results;
     }
 
     @Override
     public List<GeocodingResult> getLocationByLatLng(LatLng pCoordinates) {
-        return null;
+        try {
+            results = Arrays.asList(GeocodingApi.reverseGeocode(context,pCoordinates).await());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return results;
     }
 }
