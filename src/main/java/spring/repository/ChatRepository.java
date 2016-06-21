@@ -10,9 +10,9 @@ import java.util.List;
  * Created by Tomasz Komoszeski on 2016-06-18.
  */
 public interface ChatRepository extends JpaRepository<ChatMessage, Long> {
-    @Query("SELECT message FROM  ChatMessage message WHERE message.sender.username =?1 AND message.recevier.username =?2")
-    List<ChatMessage> findAllChatMessagesBySenderAndRecevier(String sender, String recevier);
+    @Query("SELECT message FROM  ChatMessage message WHERE message.sender.username =?1 AND message.recevier.username =?2 AND message.activated = ?3")
+    List<ChatMessage> findAllChatMessagesBySenderAndRecevier(String sender, String recevier,boolean activated);
 
-    @Query("SELECT message FROM ChatMessage message WHERE message.sender.username = ?1")
-    List<ChatMessage> findAllChatMessagesBySender(String sender);
+    @Query("SELECT message FROM ChatMessage message WHERE message.sender.username = ?1 AND message.activated = ?2")
+    List<ChatMessage> findAllChatMessagesBySender(String sender, boolean activated);
 }

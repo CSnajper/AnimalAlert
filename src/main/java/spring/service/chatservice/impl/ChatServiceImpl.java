@@ -63,11 +63,11 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ChatDTO> getMessagesByRecevier(String recevier) {
         return ChatConverter.chatMessageListToChatDTOListConverter(
-                chatRepository.findAllChatMessagesBySenderAndRecevier(SecurityUtils.getCurrentUserLogin(),recevier));
+                chatRepository.findAllChatMessagesBySenderAndRecevier(SecurityUtils.getCurrentUserLogin(),recevier,true));
     }
 
     @Override
     public List<ChatDTO> getAllMessages() {
-        return ChatConverter.chatMessageListToChatDTOListConverter(chatRepository.findAllChatMessagesBySender(SecurityUtils.getCurrentUserLogin()));
+        return ChatConverter.chatMessageListToChatDTOListConverter(chatRepository.findAllChatMessagesBySender(SecurityUtils.getCurrentUserLogin(),true));
     }
 }
