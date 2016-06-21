@@ -3,3 +3,4 @@
 /target
 /.mvn
 /.idea
+/src/main/resources/application.properties
