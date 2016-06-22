@@ -15,6 +15,8 @@ public class Geolocalization implements Serializable{
     private String id;
     private Double lat;
     private Double lng;
+    private Double accuracy;
+
     public double getLat() {
         return lat;
     }
@@ -30,9 +32,6 @@ public class Geolocalization implements Serializable{
     public void setLng(Double lng) {
         this.lng = lng;
     }
-
-
-    private Double accuracy;
 
     public Geolocalization() {
     }

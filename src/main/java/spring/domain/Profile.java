@@ -1,5 +1,7 @@
 package spring.domain;
 
+import spring.domain.geo.County;
+
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +18,9 @@ public class Profile {
 
     @Column(name="phone_number")
     private String phoneNumber;
+    @ManyToOne
+    @JoinColumn(name="county")
+    private County citizen;
 
     public long getId() {
         return id;
