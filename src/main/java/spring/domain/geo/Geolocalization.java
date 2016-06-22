@@ -13,27 +13,25 @@ import java.io.Serializable;
 public class Geolocalization implements Serializable{
     @Id
     private String id;
+    private Double lat;
+    private Double lng;
+    private Double accuracy;
 
     public double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public double getLng() {
+    public Double getLng() {
         return lng;
     }
 
-    public void setLng(double lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
-
-    private double lat;
-    private double lng;
-
-    private Double accuracy;
 
     public Geolocalization() {
     }

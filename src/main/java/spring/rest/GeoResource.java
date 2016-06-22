@@ -1,5 +1,6 @@
 package spring.rest;
 
+import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import spring.rest.dto.geo.CoordinatsDTO;
 import spring.service.geolocalisation.IGeoService;
 
 import java.util.List;
@@ -39,5 +41,15 @@ public class GeoResource {
 
         return new ResponseEntity<>(iGeoService.getLocationByPlaceId(placeId), HttpStatus.OK);
     }
-
+    @RequestMapping(value = "map/getDistance", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<DistanceMatrix> getDistance(@RequestBody CoordinatsDTO coordinatsDTO) {
+        DistanceMatrix distance = null;
+        try {
+            distance = iGeoService.getDistance(coordinatsDTO.getStart().getLatLong(),coordinatsDTO.getFinish().getLatLong());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            return new ResponseEntity<>(distance, HttpStatus.OK);
+    }
 }
