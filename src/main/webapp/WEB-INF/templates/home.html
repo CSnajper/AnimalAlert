@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta charset="UTF-8" />
     <title>Shelter - Welcome page!</title>
 </head>
 <body>
     <h1>HI</h1>
+    <form id="facebook-login"  action="/connect/facebook" method="POST" sec:authorize="isAnonymous()">
+        <input type="hidden" name="scope" value="public_profile,email" />
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+        <button type="submit">Log me in with facebook</button>
+    </form>
+    <div th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
+        <span th:case="${false}">User is not logged in</span>
+        <span th:case="${true}">Logged in user</span>
+        <span th:case="*">Should never happen, but who knows...</span>
+    </div>
 </body>
 </html>
