@@ -5,14 +5,16 @@ public class CreateEventDTO {
     private String name;
     private String description;
     private String type;
+    private String geolocalization;
 
     public CreateEventDTO() {
     }
 
-    public CreateEventDTO(String name, String description, String type) {
+    public CreateEventDTO(String name, String description, String type, String geolocalization) {
         this.name = name;
         this.description = description;
         this.type = type;
+        this.geolocalization = geolocalization;
     }
 
     public String getName() {
@@ -37,5 +39,13 @@ public class CreateEventDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getGeolocalization() {
+        return geolocalization;
+    }
+
+    public void setGeolocalization(String geolocalization) {
+        this.geolocalization = geolocalization;
     }
 }

@@ -32,6 +32,7 @@ public class EventResource {
 
     @RequestMapping(value = "/events/",
             method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<EventDTO> createEvent(@RequestBody CreateEventDTO createEventDTO){
         return new ResponseEntity<>(eventService.createEvent(createEventDTO), HttpStatus.OK);
