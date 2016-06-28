@@ -28,24 +28,24 @@ public class DatabaseConfig {
     @Inject
     private Environment env;
 
-//    @Bean
-//    public DataSource dataSource() {
-//
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
-//        dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
-//        dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
-//        dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
-//        return dataSource;
-//    }
-
     @Bean
     public DataSource dataSource() {
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder
-                .setType(EmbeddedDatabaseType.H2)
-                .build();
+
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(env.getRequiredProperty("jdbc.driverClassName"));
+        dataSource.setUrl(env.getRequiredProperty("jdbc.url"));
+        dataSource.setUsername(env.getRequiredProperty("jdbc.username"));
+        dataSource.setPassword(env.getRequiredProperty("jdbc.password"));
+        return dataSource;
     }
+
+//    @Bean
+//    public DataSource dataSource() {
+//        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+//        return builder
+//                .setType(EmbeddedDatabaseType.H2)
+//                .build();
+//    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {

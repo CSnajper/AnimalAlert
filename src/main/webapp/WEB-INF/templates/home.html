@@ -6,10 +6,15 @@
 </head>
 <body>
     <h1>HI</h1>
-    <form id="facebook-login"  action="/connect/facebook" method="POST" sec:authorize="isAnonymous()">
+    <form id="facebook-login"  action="/connect/facebook" method="POST">
         <input type="hidden" name="scope" value="public_profile,email" />
         <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
         <button type="submit">Log me in with facebook</button>
+    </form>
+    <form id="facebook-login2"  action="/signin/facebook" method="POST">
+        <input type="hidden" name="scope" value="public_profile,email" />
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+        <button type="submit">Log me in with facebook 2</button>
     </form>
     <div th:switch="${#authentication}? ${#authorization.expression('isAuthenticated()')} : ${false}">
         <span th:case="${false}">User is not logged in</span>
