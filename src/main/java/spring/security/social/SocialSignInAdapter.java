@@ -17,18 +17,12 @@ import spring.service.SocialService;
 import javax.inject.Inject;
 
 @Service
-public class SimpleSignInAdapter implements SignInAdapter {
-
-    private final Logger log = LoggerFactory.getLogger(SimpleSignInAdapter.class);
-
-    //@Inject
-    //SocialService socialService;
+public class SocialSignInAdapter implements SignInAdapter {
 
     @Inject
     private UserDetailsService userDetailsService;
 
     public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
-        log.info("ODPALAMY!");
         UserDetails user = userDetailsService.loadUserByUsername(userId);
         Authentication newAuth = new UsernamePasswordAuthenticationToken(
                 user,

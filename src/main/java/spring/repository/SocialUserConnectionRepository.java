@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-/**
- * Spring Data JPA repository for the Social User Connection entity.
- */
 public interface SocialUserConnectionRepository extends JpaRepository<SocialUserConnection, Long> {
 
     List<SocialUserConnection> findAllByProviderIdAndProviderUserId(String providerId, String providerUserId);
