@@ -1,6 +1,7 @@
 package spring.domain;
 
 import org.hibernate.validator.constraints.Email;
+import spring.domain.geo.County;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -52,6 +53,9 @@ public class User implements Serializable {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name="county")
+    private County citizen;
 
     public long getId() {
         return id;
@@ -123,5 +127,13 @@ public class User implements Serializable {
 
     public void setResetDate(ZonedDateTime resetDate) {
         this.resetDate = resetDate;
+    }
+
+    public County getCitizen() {
+        return citizen;
+    }
+
+    public void setCitizen(County citizen) {
+        this.citizen = citizen;
     }
 }

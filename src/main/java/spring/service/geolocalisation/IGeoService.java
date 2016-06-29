@@ -3,6 +3,7 @@ package spring.service.geolocalisation;
 import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
+import spring.domain.geo.Geolocalization;
 
 import java.util.List;
 
@@ -13,5 +14,6 @@ public interface IGeoService {
     List<GeocodingResult> getLocationByAdress(String pAdress);
     List<GeocodingResult> getLocationByPlaceId(String pPlaceId);
     List<GeocodingResult> getLocationByLatLng(LatLng pCoordinates);
-    DistanceMatrix getDistance(LatLng a, LatLng b) throws Exception;
+    DistanceMatrix getDistance(LatLng a, LatLng b);
+    Geolocalization getLocatationFromSystem(String geolocalization);
 }
