@@ -7,7 +7,10 @@ import com.google.maps.model.DistanceMatrix;
 import com.google.maps.model.GeocodingResult;
 import com.google.maps.model.LatLng;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import spring.domain.geo.Geolocalization;
+import spring.repository.GeoRepository;
 import spring.service.geolocalisation.IGeoService;
 
 import java.util.Arrays;
@@ -20,6 +23,9 @@ import java.util.List;
 public class GeoServiceImpl implements IGeoService {
     @Autowired
     private GeoApiContext context;
+    @Qualifier("geoRepository")
+    @Autowired
+    private GeoRepository geoRepository;
     private List<GeocodingResult> results;
     @Override
     public List<GeocodingResult> getLocationByAdress(String pAdress) {
@@ -52,7 +58,7 @@ public class GeoServiceImpl implements IGeoService {
         return results;
     }
     @Override
-    public DistanceMatrix getDistance(LatLng a,LatLng b) throws Exception {
+    public DistanceMatrix getDistance(LatLng a,LatLng b) {
         DistanceMatrix distanceMatrix = null;
         try {
             distanceMatrix = DistanceMatrixApi.newRequest(context).origins(a).destinations(b).await();
@@ -60,6 +66,11 @@ public class GeoServiceImpl implements IGeoService {
             e.printStackTrace();
         }
         return distanceMatrix;
+    }
+
+    @Override
+    public Geolocalization getLocatationFromSystem(String geolocalization) {
+        return geoRepository.findOne(geolocalization);
     }
 
 }

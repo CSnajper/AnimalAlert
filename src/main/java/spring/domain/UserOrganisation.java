@@ -2,6 +2,7 @@ package spring.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import spring.domain.geo.County;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -53,4 +54,6 @@ public class UserOrganisation {
     public void setOrganisation(Organisation organisation) {
         this.organisation = organisation;
     }
+
+
 }

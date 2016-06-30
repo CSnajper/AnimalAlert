@@ -1,5 +1,7 @@
 package spring.domain;
 
+import spring.domain.geo.County;
+
 import javax.persistence.*;
 import javax.persistence.Id;
 
@@ -12,8 +14,15 @@ public class Organisation {
     private String name;
 
     private String phoneNumber;
+    @ManyToOne
+    @JoinColumn(name="county")
+    private County location;
+
+    public Organisation() {
+    }
 
     @OneToOne
+
     @JoinColumn(name = "Address_id", referencedColumnName = "id")
     private Address Address;
 
@@ -47,5 +56,13 @@ public class Organisation {
 
     public void setAddress(Address Address) {
         this.Address = Address;
+    }
+
+    public County getLocation() {
+        return location;
+    }
+
+    public void setLocation(County location) {
+        this.location = location;
     }
 }

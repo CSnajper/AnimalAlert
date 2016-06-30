@@ -1,16 +1,20 @@
 package spring.service.events.Impl;
 
 
+import com.google.maps.model.GeocodingResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.domain.Event;
+import spring.domain.geo.Geolocalization;
 import spring.repository.EventRepository;
 import spring.repository.UserRepository;
 import spring.rest.dto.CreateEventDTO;
 import spring.rest.dto.EventDTO;
 import spring.security.util.SecurityUtils;
 import spring.service.events.EventService;
+import spring.service.geolocalisation.impl.GeoServiceImpl;
 
 import javax.inject.Inject;
 import java.util.Date;
@@ -27,6 +31,8 @@ public class EventServiceImpl implements EventService{
 
     @Inject
     EventRepository eventRepository;
+    @Autowired
+    GeoServiceImpl geoService;
 
     @Override
     public EventDTO createEvent(CreateEventDTO createEventDTO) {
@@ -35,6 +41,18 @@ public class EventServiceImpl implements EventService{
         event.setDescription(createEventDTO.getDescription());
         event.setCreationDate(new Date());
         event.setFinished(false);
+        Geolocalization locationByPlaceId = geoService.getLocatationFromSystem(createEventDTO.getGeolocalization());
+        Geolocalization geolocalization = new Geolocalization();
+        if (locationByPlaceId!=null){
+            geolocalization=locationByPlaceId;
+        }else {
+            List<GeocodingResult> locationByPlaceId1 = geoService.getLocationByPlaceId(createEventDTO.getGeolocalization());
+            GeocodingResult geocodingResult = locationByPlaceId1.get(0);
+            geolocalization.setId(geocodingResult.placeId);
+            geolocalization.setLat(geocodingResult.geometry.location.lat);
+            geolocalization.setLng(geocodingResult.geometry.location.lng);
+        }
+        event.setGeolocalization(geolocalization);
         event.setName(createEventDTO.getName());
         event.setType(Event.Type.valueOf(createEventDTO.getType()));
         eventRepository.save(event);

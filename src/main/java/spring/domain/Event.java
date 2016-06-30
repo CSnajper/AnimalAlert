@@ -1,5 +1,7 @@
 package spring.domain;
 
+import spring.domain.geo.Geolocalization;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -25,6 +27,10 @@ public class Event {
     @ManyToOne
     @JoinColumn(name="author_id")
     private User author;
+
+    @ManyToOne
+    @JoinColumn(name="geolocalization_id")
+    private Geolocalization geolocalization;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
@@ -92,5 +98,13 @@ public class Event {
 
     public void setFinished(boolean finished) {
         isFinished = finished;
+    }
+
+    public Geolocalization getGeolocalization() {
+        return geolocalization;
+    }
+
+    public void setGeolocalization(Geolocalization geolocalization) {
+        this.geolocalization = geolocalization;
     }
 }

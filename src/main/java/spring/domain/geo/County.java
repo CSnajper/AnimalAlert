@@ -1,6 +1,7 @@
 package spring.domain.geo;
 
-import spring.domain.Profile;
+import spring.domain.Organisation;
+import spring.domain.User;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,9 +18,11 @@ public class County implements Serializable {
     @Id
     private String id;
     @OneToMany(mappedBy="citizen")
-    private Set<Profile> citizens=new HashSet<>();
+    private Set<User> citizens=new HashSet<>();
+    @OneToMany(mappedBy="location")
+    private Set<Organisation> organisations=new HashSet<>();
 
-    public County(String id, Set<Profile> citizens) {
+    public County(String id, Set<User> citizens) {
         this.id = id;
         this.citizens = citizens;
     }
@@ -39,17 +42,31 @@ public class County implements Serializable {
         this.id = id;
     }
 
-    public Set<Profile> getCitizens() {
+    public Set<User> getCitizens() {
         return citizens;
     }
 
-    public void setCitizens(Set<Profile> citizens) {
+    public void setCitizens(Set<User> citizens) {
         this.citizens = citizens;
     }
-    public void addCitizen(Profile citizen) {
+    public void addCitizen(User citizen) {
         this.citizens.add(citizen);
     }
-    public void removeCitizen(Profile citizen) {
+    public void removeCitizen(User citizen) {
         this.citizens.remove(citizen);
+    }
+
+    public Set<Organisation> getOrganisations() {
+        return organisations;
+    }
+
+    public void setOrganisations(Set<Organisation> organisations) {
+        this.organisations = organisations;
+    }
+    public void addOrganisation(Organisation organisation) {
+        this.organisations.add(organisation);
+    }
+    public void removeOrganisation(Organisation organisation) {
+        this.organisations.remove(organisation);
     }
 }
