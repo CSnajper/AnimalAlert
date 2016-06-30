@@ -7,5 +7,5 @@ Insert into user(id, active, activation_key, email, password_hash, username) val
 Insert INTO user_site_authority(user_id, authority_name) VALUES (1, 'ROLE_USER');
 Insert INTO user_site_authority(user_id, authority_name) VALUES (1, 'ROLE_ADMIN');
 
-Insert INTO user_site_authority(user_id, authority_name) VALUES (2, 'ROLE_USER')
+Insert INTO user_site_authority(user_id, authority_name) VALUES (2, 'ROLE_USER');
 
