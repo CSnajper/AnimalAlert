@@ -1,5 +1,6 @@
 package spring.domain.geo;
 
+import spring.domain.Organisation;
 import spring.domain.User;
 
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ public class County implements Serializable {
     private String id;
     @OneToMany(mappedBy="citizen")
     private Set<User> citizens=new HashSet<>();
+    @OneToMany(mappedBy="location")
+    private Set<Organisation> organisations=new HashSet<>();
 
     public County(String id, Set<User> citizens) {
         this.id = id;
@@ -51,5 +54,19 @@ public class County implements Serializable {
     }
     public void removeCitizen(User citizen) {
         this.citizens.remove(citizen);
+    }
+
+    public Set<Organisation> getOrganisations() {
+        return organisations;
+    }
+
+    public void setOrganisations(Set<Organisation> organisations) {
+        this.organisations = organisations;
+    }
+    public void addOrganisation(Organisation organisation) {
+        this.organisations.add(organisation);
+    }
+    public void removeOrganisation(Organisation organisation) {
+        this.organisations.remove(organisation);
     }
 }
