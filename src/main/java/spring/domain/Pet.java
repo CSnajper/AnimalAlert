@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 public class Pet {
 
     private enum Status {FOUND, FOR_SELL, FOR_ADOPTION};
+    private enum Sex {MEN,FEMALE,UNKNOW};
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +30,7 @@ public class Pet {
 
     private String race;
 
-    private String sex;
+    private Sex sex;
 
     private String species;
 
@@ -75,11 +77,11 @@ public class Pet {
         this.race = race;
     }
 
-    public String getSex() {
+    public Sex getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(Sex sex) {
         this.sex = sex;
     }
 

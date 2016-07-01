@@ -23,7 +23,6 @@ public class Event {
 
     @Column(name = "name")
     private String name;
-
     @ManyToOne
     @JoinColumn(name="author_id")
     private User author;

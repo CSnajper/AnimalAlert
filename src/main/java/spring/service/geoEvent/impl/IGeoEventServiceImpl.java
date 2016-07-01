@@ -1,6 +1,7 @@
 package spring.service.geoEvent.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import spring.domain.Event;
 import spring.domain.Organisation;
 import spring.domain.User;
 import spring.domain.geo.Geolocalization;
@@ -32,5 +33,17 @@ public class IGeoEventServiceImpl implements IGeoEventService {
     public Set<User> getLocalPrivateUsers(Geolocalization geolocalization) {
         Set<User> allInLocation = userRepository.findAllInLocationByPlaceId(geolocalization.getId());
         return allInLocation;
+    }
+
+    @Override
+    public Set<Event> getEventFromLocation(Geolocalization geolocalization) {
+        Set<Event> events;
+        if (geolocalization.getId()==null){
+        events= eventRepository.findByLocation(geolocalization.getLat(),geolocalization.getLng());
+        }
+        else{
+            events=eventRepository.findByLocation(geolocalization.getId());
+        }
+        return events;
     }
 }

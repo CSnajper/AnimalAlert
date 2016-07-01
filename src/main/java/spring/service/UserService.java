@@ -35,7 +35,7 @@ public class UserService {
 
     @Inject
     MailService mailService;
-
+    //TODO:nie możesz zwracać usera zawierającego nawet zakodowane hasło !!! podmień na dto
     public User createUser(UserDTO userDTO) {
         User user = new User();
 
@@ -55,7 +55,7 @@ public class UserService {
         log.debug("Created Information for User: {}", user);
         return user;
     }
-
+//TODO:nie możesz zwracać usera zawierającego nawet zakodowane hasło !!! podmień na dto
     public User registerUser(UserDTO userDTO) {
         User user = new User();
 
