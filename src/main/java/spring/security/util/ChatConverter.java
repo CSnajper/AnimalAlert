@@ -1,5 +1,6 @@
 package spring.security.util;
 
+import lombok.experimental.UtilityClass;
 import spring.rest.dto.ChatDTO;
 import spring.domain.ChatMessage;
 
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * Created by Tomasz Komoszeski on 2016-06-19.
  */
+@UtilityClass
 public class ChatConverter {
     public static ChatDTO chatMessageToChatDTOConverter(ChatMessage aChatMessage){
         return aChatMessage == null ? null  :

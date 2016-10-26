@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import spring.rest.dto.ChatCreateDTO;
 import spring.rest.dto.ChatDTO;
@@ -32,6 +33,7 @@ public class ChatResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ChatDTO> sendMessage(@RequestBody ChatCreateDTO chatCreateDTO){
         return new ResponseEntity<>(chatService.sendMessage(chatCreateDTO),HttpStatus.OK);
     }

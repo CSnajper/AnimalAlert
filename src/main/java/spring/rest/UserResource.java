@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import spring.domain.User;
 import spring.repository.UserRepository;
@@ -45,6 +46,7 @@ public class UserResource {
     @RequestMapping(value = "/users/{username:[_'.@a-z0-9-]+}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('" + AuthoritiesConstants.ADMIN + "')")
     public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
         log.debug("REST request to get User : {}", username);
         return userRepository.findOneByUsername(username)
@@ -69,7 +71,7 @@ public class UserResource {
     @RequestMapping(value = "/users",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured(AuthoritiesConstants.ADMIN)
+    @PreAuthorize("hasRole('" + AuthoritiesConstants.ADMIN + "')")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
         HttpHeaders headers = new HttpHeaders();
@@ -151,7 +153,7 @@ public class UserResource {
     @RequestMapping(value = "/users/{username:[_'.@a-z0-9-]+}",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @Secured(AuthoritiesConstants.ADMIN)
+    @PreAuthorize("hasRole('" + AuthoritiesConstants.ADMIN + "')")
     public ResponseEntity<Void> deleteUser(@PathVariable String username) {
         log.debug("REST request to delete User: {}", username);
         userService.deleteUserInformation(username);

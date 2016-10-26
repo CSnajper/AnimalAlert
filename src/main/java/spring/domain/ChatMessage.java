@@ -1,5 +1,6 @@
 package spring.domain;
 
+import lombok.Data;
 import spring.domain.User;
 
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import java.util.Date;
  */
 
 @Entity
+@Data
 public class ChatMessage {
 
     @Id
@@ -38,53 +40,4 @@ public class ChatMessage {
 
     @Column(name = "message_content")
     private String content;
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Date getDateMessage() {
-        return dateMessage;
-    }
-
-    public void setDateMessage(Date dateMessage) {
-        this.dateMessage = dateMessage;
-    }
-
-    public boolean isActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public User getSender() {
-        return sender;
-    }
-
-    public void setSender(User sender) {
-        this.sender = sender;
-    }
-
-    public User getRecevier() {
-        return recevier;
-    }
-
-    public void setRecevier(User recevier) {
-        this.recevier = recevier;
-    }
 }

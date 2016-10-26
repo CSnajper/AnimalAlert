@@ -1,10 +1,12 @@
 package spring.service.util;
 
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang.RandomStringUtils;
 
 /**
  * Utility class for generating random Strings.
  */
+@UtilityClass
 public final class RandomUtil {
 
     private static final int DEF_COUNT = 20;

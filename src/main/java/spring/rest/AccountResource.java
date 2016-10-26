@@ -8,11 +8,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import spring.domain.User;
 import spring.repository.UserRepository;
 import spring.rest.dto.KeyAndPasswordDTO;
 import spring.rest.dto.UserDTO;
+import spring.security.util.SecurityUtils;
 import spring.service.MailService;
 import spring.service.UserService;
 
@@ -91,7 +93,7 @@ public class AccountResource {
     @RequestMapping(value = "/activate",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
+    public ResponseEntity<String> activateAccount(@RequestParam("key") String key) {
         return userService.activateRegistration(key)
                 .map(user -> new ResponseEntity<String>(HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
@@ -103,14 +105,13 @@ public class AccountResource {
      * @param request the HTTP request
      * @return the login if the user is authenticated
      */
-    @RequestMapping(value = "/authenticate",
+    @RequestMapping(value = "/is_authenticate",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> isAuthenticated(HttpServletRequest request) {
         log.debug("REST request to check if the current user is authenticated");
-        if(request.getRemoteUser() == null)
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(SecurityUtils.getCurrentUserLogin(), HttpStatus.OK);
     }
 
     /**
@@ -121,10 +122,11 @@ public class AccountResource {
     @RequestMapping(value = "/account",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<UserDTO> getAccount() {
-        return Optional.ofNullable(userService.getUserWithAuthorities())
+        return userService.getUserWithAuthorities()
                 .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+                .orElse(new ResponseEntity<>(HttpStatus.FORBIDDEN));
     }
 
     /**

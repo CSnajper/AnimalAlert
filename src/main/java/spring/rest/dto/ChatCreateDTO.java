@@ -1,6 +1,7 @@
 package spring.rest.dto;
 
 import io.swagger.annotations.ApiModel;
+import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 
 @ApiModel
+@Data
 public class ChatCreateDTO implements Serializable {
 
     @Pattern(regexp = "^[a-z0-9]*$")
@@ -25,22 +27,6 @@ public class ChatCreateDTO implements Serializable {
 
     public ChatCreateDTO(String recevier, String content) {
         this.recevier = recevier;
-        this.content = content;
-    }
-
-    public String getRecevier() {
-        return recevier;
-    }
-
-    public void setRecevier(String recevier) {
-        this.recevier = recevier;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
         this.content = content;
     }
 }

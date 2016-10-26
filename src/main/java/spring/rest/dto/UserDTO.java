@@ -1,6 +1,8 @@
 package spring.rest.dto;
 
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
 import spring.domain.Authority;
 import spring.domain.User;
@@ -11,6 +13,8 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Data
+@NoArgsConstructor
 public class UserDTO {
     public static final int PASSWORD_MIN_LENGTH = 4;
     public static final int PASSWORD_MAX_LENGTH = 100;
@@ -32,9 +36,6 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-    public UserDTO() {
-    }
-
     public UserDTO(User user) {
         this(user.getUsername(), null, user.getEmail(), user.isActivated(),
                 user.getAuthorities().stream().map(Authority::getName)
@@ -47,45 +48,5 @@ public class UserDTO {
         this.activated = activated;
         this.email = email;
         this.authorities = authorities;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Set<String> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<String> authorities) {
-        this.authorities = authorities;
-    }
-
-    public boolean isActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
     }
 }

@@ -75,10 +75,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public User getUserWithAuthorities() {
-        User user = userRepository.findOneByUsername(SecurityUtils.getCurrentUserLogin()).get();
-        user.getAuthorities().size(); // eagerly load the association
-        return user;
+    public Optional<User> getUserWithAuthorities() {
+        return userRepository.findByUsernameWithAuthorities(SecurityUtils.getCurrentUserLogin());
     }
 
     public Optional<User> activateRegistration(String key) {

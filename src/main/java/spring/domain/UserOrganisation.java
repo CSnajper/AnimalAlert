@@ -2,6 +2,7 @@ package spring.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import spring.domain.geo.County;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "user_organisation", uniqueConstraints={@UniqueConstraint(columnNames={"user_id", "organisation_id"})})
+@Data
 public class UserOrganisation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,30 +32,6 @@ public class UserOrganisation {
             joinColumns = {@JoinColumn(name = "user_organisation_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Organisation getOrganisation() {
-        return organisation;
-    }
-
-    public void setOrganisation(Organisation organisation) {
-        this.organisation = organisation;
-    }
 
 
 }
