@@ -14,7 +14,7 @@ public class Pet {
     private enum Status {FOUND, FOR_SELL, FOR_ADOPTION};
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne

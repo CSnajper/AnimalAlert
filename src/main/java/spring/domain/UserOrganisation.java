@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 public class UserOrganisation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToOne

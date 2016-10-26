@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @Data
 public class Organisation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;

@@ -19,7 +19,7 @@ import java.util.Date;
 public class ChatMessage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Temporal(TemporalType.TIMESTAMP)
