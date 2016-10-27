@@ -1,0 +1,22 @@
+logging:
+  file: hpbalancer.log
+  level:
+      spring: INFO
+
+jdbc:
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/shelter
+  username: shelter
+  password: shelter
+hibernate:
+  dialect: org.hibernate.dialect.MySQLDialect
+  show_sql: true
+  format_sql: false
+  hbm2ddl:
+    auto: update
+
+spring:
+  social:
+    facebook:
+      clientId: 381487238642267
+      clientSecret: 4fde925904fa18f773a36d57430c47b7
