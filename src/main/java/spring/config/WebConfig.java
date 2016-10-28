@@ -1,6 +1,7 @@
 package spring.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import javax.servlet.MultipartConfigElement;
 import java.util.Properties;
 
 @Configuration
@@ -61,5 +63,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         return mailSender;
     }
+
+    @Bean
+    MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        factory.setMaxFileSize("5120MB");
+        factory.setMaxRequestSize("5120MB");
+        return factory.createMultipartConfig();
+    }
+
 
 }

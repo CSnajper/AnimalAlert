@@ -1,5 +1,5 @@
 logging:
-  file: hpbalancer.log
+  file: animal-alert.log
   level:
       spring: INFO
 
@@ -16,6 +16,10 @@ hibernate:
     auto: update
 
 spring:
+  http:
+    multipart:
+      maxFileSize: 10Mb
+      maxRequestSize: 10Mb
   social:
     facebook:
       clientId: 381487238642267

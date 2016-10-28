@@ -49,6 +49,9 @@ public class User implements Serializable {
     @Column(name = "reset_date", nullable = true)
     private ZonedDateTime resetDate = null;
 
+    @Transient
+    private byte[] profileImage;
+
     @ManyToMany
     @JoinTable(
             name = "user_site_authority",
@@ -58,4 +61,10 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name="county")
     private County citizen;
+
+    public byte[] getProfileImage() {
+        if(profileImage == null) {
+            
+        }
+    }
 }

@@ -7,9 +7,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import spring.domain.User;
 import spring.security.AuthoritiesConstants;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Utility class for Spring Security.
@@ -35,6 +37,15 @@ public final class SecurityUtils {
             }
         }
         return userName;
+    }
+    /**
+     * Get the current user entity.
+     *
+     * @return the user object
+     */
+    public static User getCurrentUserPrincipal(){
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return (User)securityContext.getAuthentication().getPrincipal();
     }
 
     /**
