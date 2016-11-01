@@ -108,7 +108,7 @@ public class AccountResource {
     @RequestMapping(value = "/is_authenticate",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("'isAuthenticated()'")
     public ResponseEntity<?> isAuthenticated(HttpServletRequest request) {
         log.debug("REST request to check if the current user is authenticated");
         return new ResponseEntity<>(SecurityUtils.getCurrentUserLogin(), HttpStatus.OK);

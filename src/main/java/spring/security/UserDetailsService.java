@@ -1,7 +1,9 @@
 package spring.security;
 
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Component;
 import spring.domain.User;
+import spring.model.CustomUserModel;
 import spring.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,15 +36,16 @@ public class UserDetailsService implements org.springframework.security.core.use
         String lowercaseLogin = login.toLowerCase();
         Optional<User> userFromDatabase = userRepository.findByUsername(lowercaseLogin);
         return userFromDatabase.map(user -> {
-            if (!user.isActivated()) {
+            if (!user.getActivated()) {
                 throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
             }
-            List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
+            if(user.getUserRoles().isEmpty()){
+                throw new AuthenticationCredentialsNotFoundException("User dosen't belong to any group");
+            }
+            List<GrantedAuthority> grantedAuthorities = user.getUserRoles().stream()
                     .map(authority -> new SimpleGrantedAuthority(authority.getName()))
                     .collect(Collectors.toList());
-            return new org.springframework.security.core.userdetails.User(lowercaseLogin,
-                    user.getPassword(),
-                    grantedAuthorities);
+           return new CustomUserModel(user, grantedAuthorities);
         }).orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the " +
                 "database"));
     }

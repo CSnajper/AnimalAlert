@@ -67,7 +67,7 @@ public class SocialService {
             Authority authority = authorityRepository.findOne("ROLE_USER");
             Set<Authority> authorities = new HashSet<>();
             authorities.add(authority);
-            user.setAuthorities(authorities);
+            user.setUserRoles(authorities);
 
             user = userRepository.save(user);
         }
@@ -76,7 +76,7 @@ public class SocialService {
         }
 
         String lowercaseLogin = user.getUsername().toLowerCase();
-        List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
+        List<GrantedAuthority> grantedAuthorities = user.getUserRoles().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getName()))
                 .collect(Collectors.toList());
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(lowercaseLogin,
@@ -136,7 +136,7 @@ public class SocialService {
         newUser.setPassword(encryptedPassword);
         newUser.setEmail(email);
         newUser.setActivated(true);
-        newUser.setAuthorities(authorities);
+        newUser.setUserRoles(authorities);
 
         return userRepository.save(newUser);
     }

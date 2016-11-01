@@ -37,8 +37,8 @@ public class UserDTO {
     private Set<String> authorities;
 
     public UserDTO(User user) {
-        this(user.getUsername(), null, user.getEmail(), user.isActivated(),
-                user.getAuthorities().stream().map(Authority::getName)
+        this(user.getUsername(), null, user.getEmail(), user.getActivated(),
+                user.getUserRoles().stream().map(Authority::getName)
                         .collect(Collectors.toSet()));
     }
 

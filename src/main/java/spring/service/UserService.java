@@ -14,7 +14,8 @@ import spring.security.util.SecurityUtils;
 import spring.service.util.RandomUtil;
 
 import javax.inject.Inject;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -44,7 +45,7 @@ public class UserService {
             userDTO.getAuthorities().stream().forEach(
                     authority -> authorities.add(authorityRepository.findOne(authority))
             );
-            user.setAuthorities(authorities);
+            user.setUserRoles(authorities);
         }
 
         user.setUsername(userDTO.getUsername());
@@ -62,7 +63,7 @@ public class UserService {
         Authority authority = authorityRepository.findOne("ROLE_USER");
         Set<Authority> authorities = new HashSet<>();
         authorities.add(authority);
-        user.setAuthorities(authorities);
+        user.setUserRoles(authorities);
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -104,7 +105,7 @@ public class UserService {
 
         return userRepository.findOneByResetKey(key)
                 .filter(user -> {
-                    ZonedDateTime oneDayAgo = ZonedDateTime.now().minusHours(24);
+                    ChronoLocalDateTime oneDayAgo = LocalDateTime.now().minusHours(24);
                     return user.getResetDate().isAfter(oneDayAgo);
                 })
                 .map(user -> {
@@ -118,10 +119,10 @@ public class UserService {
 
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmail(mail)
-                .filter(User::isActivated)
+                .filter(User::getActivated)
                 .map(user -> {
                     user.setResetKey(RandomUtil.generateResetKey());
-                    user.setResetDate(ZonedDateTime.now());
+                    user.setResetDate(LocalDateTime.now());
                     userRepository.save(user);
                     return user;
                 });

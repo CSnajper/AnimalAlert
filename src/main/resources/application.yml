@@ -24,3 +24,7 @@ spring:
     facebook:
       clientId: 381487238642267
       clientSecret: 4fde925904fa18f773a36d57430c47b7
+
+files:
+  location:
+    IMAGE_PROFILE: C:\\images
