@@ -1,7 +1,5 @@
 package spring.domain;
 
-import spring.domain.User;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +32,7 @@ public class ChatMessage {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recevier_id", referencedColumnName = "id")
-    private User recevier;
+    private User receiver;
 
     @Column(name = "message_content")
     private String content;
@@ -80,11 +78,11 @@ public class ChatMessage {
         this.sender = sender;
     }
 
-    public User getRecevier() {
-        return recevier;
+    public User getReceiver() {
+        return receiver;
     }
 
-    public void setRecevier(User recevier) {
-        this.recevier = recevier;
+    public void setReceiver(User recevier) {
+        this.receiver = recevier;
     }
 }

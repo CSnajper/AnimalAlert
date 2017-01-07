@@ -1,4 +1,4 @@
-package spring.rest.dto;
+package spring.rest.dto.chat;
 
 import io.swagger.annotations.ApiModel;
 
@@ -12,28 +12,28 @@ import java.io.Serializable;
  */
 
 @ApiModel
-public class ChatCreateDTO implements Serializable {
+public class CreateChatMessageDTO implements Serializable {
 
     @Pattern(regexp = "^[a-z0-9]*$")
     @NotNull
     @Size(min = 1, max = 50)
-    private String recevier;
+    private String receiver;
     private String content;
 
-    public ChatCreateDTO() {
+    public CreateChatMessageDTO() {
     }
 
-    public ChatCreateDTO(String recevier, String content) {
-        this.recevier = recevier;
+    public CreateChatMessageDTO(String receiver, String content) {
+        this.receiver = receiver;
         this.content = content;
     }
 
-    public String getRecevier() {
-        return recevier;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setRecevier(String recevier) {
-        this.recevier = recevier;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 
     public String getContent() {

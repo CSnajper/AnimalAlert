@@ -3,16 +3,16 @@ package spring.rest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import spring.rest.dto.ChatCreateDTO;
-import spring.rest.dto.ChatDTO;
-import spring.service.chatservice.ChatService;
+import spring.rest.dto.chat.CreateChatMessageDTO;
+import spring.rest.dto.chat.ChatDTO;
+import spring.service.chat.ChatService;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -25,15 +25,15 @@ public class ChatResource {
 
     private final Logger log = LoggerFactory.getLogger(ChatResource.class);
 
-    @Inject
-    ChatService chatService;
+    @Autowired
+    ChatService iChatService;
 
     @RequestMapping(value = "/chat",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<ChatDTO> sendMessage(@RequestBody ChatCreateDTO chatCreateDTO){
-        return new ResponseEntity<>(chatService.sendMessage(chatCreateDTO),HttpStatus.OK);
+    public ResponseEntity<ChatDTO> sendMessage(@RequestBody CreateChatMessageDTO aCreateChatMessageDTO){
+        return new ResponseEntity<>(iChatService.sendMessage(aCreateChatMessageDTO),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/chat/{recevier:[_'.@a-z0-9-]+}",
@@ -41,22 +41,22 @@ public class ChatResource {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<List<ChatDTO>> getMyMessagesTo(@PathVariable("recevier") String aRecevier){
-        return new ResponseEntity<>(chatService.getMessagesByRecevier(aRecevier),HttpStatus.OK);
+        return new ResponseEntity<>(iChatService.getMessagesByReceiver(aRecevier),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/chat/",
+    @RequestMapping(value = "/chat",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<List<ChatDTO>> getAllMyMessages(){
-        return new ResponseEntity<>(chatService.getAllMessages(),HttpStatus.OK);
+        return new ResponseEntity<>(iChatService.getAllMessages(),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/chat/{id}",
             method = RequestMethod.POST
     )
     public ResponseEntity<Void> deactivateMessage(@PathVariable("id") Long aId){
-        chatService.deactivateMessage(aId);
+        iChatService.deactivateMessage(aId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

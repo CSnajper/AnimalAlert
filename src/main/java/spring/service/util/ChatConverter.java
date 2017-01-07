@@ -1,6 +1,6 @@
-package spring.security.util;
+package spring.service.util;
 
-import spring.rest.dto.ChatDTO;
+import spring.rest.dto.chat.ChatDTO;
 import spring.domain.ChatMessage;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class ChatConverter {
                         aChatMessage.getId(),
                         aChatMessage.isActivated(),
                         aChatMessage.getSender().getUsername(),
-                        aChatMessage.getRecevier().getUsername(),
+                        aChatMessage.getReceiver().getUsername(),
                         aChatMessage.getContent(),aChatMessage.getDateMessage().toString()
                 );
     }

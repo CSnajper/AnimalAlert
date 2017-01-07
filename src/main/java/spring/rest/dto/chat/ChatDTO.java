@@ -1,13 +1,11 @@
-package spring.rest.dto;
+package spring.rest.dto.chat;
 
 import io.swagger.annotations.ApiModel;
-import spring.domain.ChatMessage;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by Tomasz Komoszeski on 2016-06-19.
@@ -16,13 +14,13 @@ import java.util.Date;
 @ApiModel
 public class ChatDTO implements Serializable {
     private Long id;
-    private boolean acitvated;
+    private boolean activated;
     private String sender;
 
     @Pattern(regexp = "^[a-z0-9]*$")
     @NotNull
     @Size(min = 1, max = 50)
-    private String recevier;
+    private String receiver;
 
     @Pattern(regexp = "^[a-z0-9]*$")
     @NotNull
@@ -33,11 +31,11 @@ public class ChatDTO implements Serializable {
     public ChatDTO() {
     }
 
-    public ChatDTO(Long id, boolean acitvated, String sender, String recevier, String content, String date) {
+    public ChatDTO(Long id, boolean activated, String sender, String receiver, String content, String date) {
         this.id = id;
-        this.acitvated = acitvated;
+        this.activated = activated;
         this.sender = sender;
-        this.recevier = recevier;
+        this.receiver = receiver;
         this.content = content;
         this.date = date;
     }
@@ -50,12 +48,12 @@ public class ChatDTO implements Serializable {
         this.id = id;
     }
 
-    public boolean isAcitvated() {
-        return acitvated;
+    public boolean isActivated() {
+        return activated;
     }
 
-    public void setAcitvated(boolean acitvated) {
-        this.acitvated = acitvated;
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 
     public String getSender() {
@@ -66,12 +64,12 @@ public class ChatDTO implements Serializable {
         this.sender = sender;
     }
 
-    public String getRecevier() {
-        return recevier;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setRecevier(String recevier) {
-        this.recevier = recevier;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 
     public String getContent() {
