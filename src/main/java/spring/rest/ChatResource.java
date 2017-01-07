@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.rest.dto.chat.CreateChatMessageDTO;
 import spring.rest.dto.chat.ChatDTO;
-import spring.service.chat.ChatService;
+import spring.service.chat.IChatService;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class ChatResource {
     private final Logger log = LoggerFactory.getLogger(ChatResource.class);
 
     @Autowired
-    ChatService iChatService;
+    IChatService iChatService;
 
     @RequestMapping(value = "/chat",
             method = RequestMethod.POST,

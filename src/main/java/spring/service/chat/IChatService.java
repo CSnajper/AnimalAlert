@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Tomasz Komoszeski on 2016-06-18.
  */
-public interface ChatService {
+public interface IChatService {
     ChatDTO sendMessage(CreateChatMessageDTO aCreateChatMessageDTO);
     void deactivateMessage(Long aId);
     List<ChatDTO> getMessagesByReceiver(String aReceiver);

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.rest.dto.chat.CreateChatMessageDTO;
 import spring.rest.dto.chat.ChatDTO;
-import spring.service.chat.ChatService;
+import spring.service.chat.IChatService;
 import spring.service.util.ChatConverter;
 import spring.domain.ChatMessage;
 import spring.domain.User;
@@ -24,9 +24,9 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ChatServiceImpl implements ChatService {
+public class IChatServiceImpl implements IChatService {
 
-    private final Logger log = LoggerFactory.getLogger(ChatServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(IChatServiceImpl.class);
 
     @Inject
     UserRepository userRepository;
